@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Events & Gallery - IEEE Information Theory Society</title>
+    <link rel="stylesheet" href="Styles/styles.css">
+</head>
+<body>
+    <!-- Header (Same as main page) -->
+    <header>
+        <div class="header-container container">
+            <div class="logo">
+                <a href="https://www.ieee.org/" target="_blank">
+                    <img src="Images/Logos/IEEE.png" alt="IEEE Logo">
+                </a>
+                <a href="https://www.itsoc.org/" target="_blank">
+                    <img src="Images/Logos/ITS.png" alt="IEEE ITS Logo">
+                </a>
+            </div>            
+            
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="upcoming.html">Upcoming Events</a></li>
+                    <li><a href="members.html">Our Team</a></li>
+                    <li><a href="membership.html">Membership</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero" style="height: 40vh; min-height: 300px;">
+        <div class="slideshow-container">
+            <div class="slide fade active">
+                <img src="Images/Img1.jpg" alt="Events Cover">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <div class="section-title">
+                <h2>Past Events & Gallery</h2>
+            </div>
+            
+            <section class="events-section" id="events">
+                <h3>Our Events</h3>
+                <div class="event-intro">
+                    <p>The IEEE Information Theory Society hosts various events throughout the year to foster collaboration, knowledge sharing, and professional development among our members. Explore our past events below and click on any event to view its photo gallery.</p>
+                </div>
+                
+                <div class="event-item" data-event="agm-2025">
+                    <img src="Images/AGM/DSC09364.JPG" alt="AGM 2025">
+                    <div class="event-details">
+                        <h4>Annual General Meet</h4>
+                        <p>Our Annual General Meet brought together the members of IEEE for a day of networking and presentations. The event featured leaders from each society who highlighted the year's achievements and future directions for our IEEE chapter.</p>
+                    </div>
+                </div>
+                
+                <div class="event-item" data-event="hack-the-halls-2024">
+                    <img src="Images/HackTheHalls/e9112e19-1449-4c9f-ae0f-cff9cd40baa8.jpg" alt="Hack the Halls 2024">
+                    <div class="event-details">
+                        <h4>Hack the Halls 2024</h4>
+                        <p>Our Christmas-themed technical event organized in collaboration with IEEE CS. Day 1 was a Debugging Challenge where participants showcased their problem-solving skills by identifying and fixing code errors. Day 2 featured Coding Roulette, an exciting coding relay challenge that tested teamwork and adaptability.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="gallery">
+                <div class="gallery-header">
+                    <h3 id="gallery-title">Event Gallery</h3>
+                </div>
+                <div id="gallery-content"></div>
+                <button class="back-button" onclick="goBack()">Back to Events</button>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for enlarged images -->
+    <div id="image-modal" class="modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content">
+            <img id="modal-img" src="">
+        </div>
+    </div>
+    
+    <!-- Footer (Same as main page) -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>IEEE Information Theory Society</h3>
+                    <p>Advancing the theoretical and applied aspects of information technology.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/its_bmsit/" target="_blank"><i>in</i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <div class="quick-links">
+                        <a href="index.html"><i class="icon-arrow"></i> Home</a>
+                        <a href="gallery.html"><i class="icon-arrow"></i> Gallery</a>
+                        <a href="upcoming.html"><i class="icon-arrow"></i> Upcoming Events</a>
+                        <a href="members.html"><i class="icon-arrow"></i> Our Team</a>
+                        <a href="membership.html"><i class="icon-arrow"></i> Membership</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p>Phone: +91 90368 53351</p>
+                    <p>Email: itsbmsit2025@gmail.com</p>
+                    <p>Address: ITS, BMSIT&M Campus</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>Made with ❤️ by IEEE ITS</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('show');
+        });
+        
+        // Intersection Observer for fade-in animations
+        document.addEventListener("DOMContentLoaded", function() {
+            // Event items fade-in
+            const eventItems = document.querySelectorAll('.event-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            eventItems.forEach(item => {
+                observer.observe(item);
+                
+                // Add event listener for clicking on event items
+                item.addEventListener('click', function() {
+                    const eventId = this.getAttribute('data-event');
+                    showGallery(eventId);
+                });
+            });
+
+            // Check URL hash on page load to show gallery if needed
+            checkUrlHash();
+
+            // Handle browser back button navigation
+            window.onpopstate = function(event) {
+                if (event.state && event.state.page === "gallery") {
+                    showGallery(event.state.eventId, false);
+                } else {
+                    hideGallery(false);
+                }
+            };
+        });
+
+        // Check URL hash on load and after hash changes
+        function checkUrlHash() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#gallery-')) {
+                const eventId = hash.replace('#gallery-', '');
+                showGallery(eventId, false);
+            }
+        }
+
+        // Add hash change listener
+        window.addEventListener('hashchange', checkUrlHash);
+
+        function showGallery(eventId, pushState = true) {
+            const galleryContent = document.getElementById('gallery-content');
+            const galleryTitle = document.getElementById('gallery-title');
+            
+            galleryContent.innerHTML = '';
+            
+            if (eventId === 'hack-the-halls-2024') {
+                galleryTitle.textContent = 'Hack the Halls 2024';
+                
+                const images = [
+                    "Images/HackTheHalls/e9112e19-1449-4c9f-ae0f-cff9cd40baa8.jpg",
+                    "Images/HackTheHalls/IMG_20241223_103236.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8529.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8525.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8522.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8414.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8503.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8489.jpg",
+                    "Images/HackTheHalls/IMG_20241223_102358.jpg", 
+                    "Images/HackTheHalls/Copy of IMG_8325.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8236.jpg",
+                    "Images/HackTheHalls/IMG_20241223_102255.jpg",
+                    "Images/HackTheHalls/Copy of IMG_8310.jpg",
+                    "Images/HackTheHalls/IMG_20241223_102411.jpg",
+                    "Images/HackTheHalls/IMG_20241223_102941.jpg",
+                    "Images/HackTheHalls/IMG_20241223_102436.jpg",
+                    "Images/HackTheHalls/IMG_20241223_102947.jpg"
+                ];
+                
+                createGalleryItems(images, galleryContent);
+            }
+            
+            if (eventId === 'agm-2025') {
+                galleryTitle.textContent = 'Annual General Meet 2025';
+                
+                const images = [
+                    "Images/AGM/DSCN0500.JPG",
+                    "Images/AGM/DSC09364.JPG",
+                    "Images/AGM/DSC09352.JPG",
+                    "Images/AGM/7209a4c3-12b8-4afc-a374-1b8ed8e253e5.jpg",
+                    "Images/AGM/DSC09324.JPG",
+                    "Images/AGM/DSC09346.JPG",
+                    "Images/AGM/IMG-20250125-WA0029.jpg",
+                    "Images/AGM/DSC09250.JPG",
+                    "Images/AGM/IMG-20250125-WA0233.jpg",
+                    "Images/AGM/ce82cbd1-504b-49cc-9a6f-ccc03538c946.jpg",
+                    "Images/AGM/e0341157-7f8f-4e96-afd4-bfc6696f3207.jpg"
+                ];
+                
+                createGalleryItems(images, galleryContent);
+            }
+
+            document.getElementById('events').style.display = 'none';
+            document.getElementById('gallery').style.display = 'block';
+
+            if (pushState) {
+                // Use meaningful hash for better navigation persistence
+                history.pushState({ page: "gallery", eventId: eventId }, "", `#gallery-${eventId}`);
+            }
+            
+            // Setup observation for gallery items
+            setupGalleryObserver();
+        }
+        
+        function createGalleryItems(images, container) {
+            images.forEach((src, index) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Gallery Image ${index + 1}`;
+                img.onclick = () => openModal(src);
+                
+                div.appendChild(img);
+                container.appendChild(div);
+            });
+        }
+        
+        function setupGalleryObserver() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            setTimeout(function() {
+                document.querySelector('.section-title').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 10);
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add delay based on index for staggered animation
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, 100 * Array.from(galleryItems).indexOf(entry.target));
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            galleryItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+        
+        function goBack() {
+            hideGallery();
+            setTimeout(function() {
+                document.querySelector('.section-title').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 10);
+}
+
+        function hideGallery(pushState = true) {
+            document.getElementById('events').style.display = 'block';
+            document.getElementById('gallery').style.display = 'none';
+
+            if (pushState) {
+                history.pushState(null, "", "gallery.html");
+            }
+        }
+
+        function openModal(src) {
+            const modal = document.getElementById('image-modal');
+            document.getElementById('modal-img').src = src;
+            modal.style.display = 'flex';
+            
+            // Allow time for the display to change before adding the show class
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('show');
+            
+            // Wait for animation to complete before hiding
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 400);
+        }
+        
+        // Close modal when clicking on it
+        document.getElementById('image-modal').addEventListener('click', function(e) {
+            if (e.target !== document.getElementById('modal-img')) {
+                closeModal();
+            }
+        });
+        
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

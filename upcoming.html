@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Styles/styles.css">
+    <style>
+/* Modified timeline styles */
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <div class="logo">
+                <a href="https://www.ieee.org/" target="_blank">
+                    <img src="Images/Logos/IEEE.png" alt="IEEE Logo">
+                </a>
+                <a href="https://www.itsoc.org/" target="_blank">
+                    <img src="Images/Logos/ITS.png" alt="IEEE ITS Logo">
+                </a>
+            </div>            
+            
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="upcoming-events.html" class="active">Upcoming Events</a></li>
+                    <li><a href="members.html">Our Team</a></li>
+                    <li><a href="membership.html">Membership</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+     <!-- Hero Section -->
+     <section class="hero" style="height: 40vh; min-height: 300px;">
+        <div class="slideshow-container">
+            <div class="slide fade active">
+                <img src="Images/Img1.jpg" alt="Events Cover">
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="schedule" class="timeline-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Events Calendar 2025</h2>
+            </div>
+            
+            <div class="timeline">
+                <!-- ProtoNova Event -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>ProtoNova 2025</h3>
+                        <p>An interdisciplinary student development and prototyping event where teams of students are tasked with developing and presenting a prototype for the given problem statement. The event aims to foster innovation and critical real-world problem solving skills among students. It also aims to encourage interdisciplinary collaboration among students.</p>
+                    </div>
+                    <div class="timeline-image">
+                        <img src="Images/Upcoming/ProtoNova.jpg" alt="ProtoNova Event">
+                    </div>
+                </div>
+                
+                <!-- CryptoSphere Event -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>CryptoSphere</h3>
+                        <p>An event exploring the key concepts of cryptography and emphasizing its role in securing modern digital communication and encryption/decryption systems. The event also expands on the usage of cryptography in blockchain and cybersecurity. The event aims to help participants develop a foundational understanding of cryptography and its importance in the present and the future. It also aims to encourage participants to contribute to the world of cryptography.</p>
+                    </div>
+                    <div class="timeline-image">
+                        <img src="Images/Upcoming/Crypto.jpg" alt="CryptoSphere Event">
+                    </div>
+                </div>
+                
+                <!-- GitCraft Event -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>GitCraft</h3>
+                        <p>A seminar to explore Git, followed by an interactive challenge where participants replicate and enhance an existing project. The event concludes with a questioning round where participants defend the modifications and solutions. The event is aimed at sharpening the participants' Git skills, from basic commands to advanced project collaboration techniques. It also allows participants to learn hands-on and gain a deep understanding of version control systems.</p>
+                    </div>
+                    <div class="timeline-image">
+                        <img src="Images/Upcoming/Git.jpg" alt="GitCraft Event">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>IEEE Information Theory Society</h3>
+                    <p>Advancing the theoretical and applied aspects of information technology.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/its_bmsit/" target="_blank"><i>in</i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <div class="quick-links">
+                        <a href="index.html"><i class="icon-arrow"></i> Home</a>
+                        <a href="gallery.html"><i class="icon-arrow"></i> Gallery</a>
+                        <a href="upcoming-events.html"><i class="icon-arrow"></i> Upcoming Events</a>
+                        <a href="members.html"><i class="icon-arrow"></i> Our Team</a>
+                        <a href="membership.html"><i class="icon-arrow"></i> Membership</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p>Phone: +91 90368 53351</p>
+                    <p>Email: itsbmsit2025@gmail.com</p>
+                    <p>Address: ITS, BMSIT&M Campus</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>Made with ❤️ by IEEE ITS</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('show');
+        });
+        
+        // Timeline animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+            
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
